@@ -136,6 +136,8 @@ let
         options = [
           "--edition"
           "2024"
+          "--config"
+          "newline_style=Unix"
         ];
       };
     };
@@ -190,6 +192,8 @@ let
           "-i"
           "--line-width"
           "100"
+          "--line-ending"
+          "lf"
         ];
       };
     };
@@ -368,9 +372,8 @@ in
           ) selected
         );
     in
-    assert lib.assertMsg (
-      unknown == [ ]
-    ) "bachfmt: unknown language(s): ${toString unknown}. Known: ${toString (builtins.attrNames languages)}";
+    assert lib.assertMsg (unknown == [ ])
+      "bachfmt: unknown language(s): ${toString unknown}. Known: ${toString (builtins.attrNames languages)}";
     pkgs.treefmt.withConfig {
       name = "bachfmt-treefmt";
       runtimeInputs = lib.concatMap (f: allFormatters.${f}.packages) usedFormatters;
