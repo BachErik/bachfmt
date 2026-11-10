@@ -40,7 +40,9 @@
         house = pkgs.runCommand "bachfmt-house" { } ''
           cp -r ${./house} $out
           chmod -R u+w $out
-          cp ${pkgs.writeText "qmlformat.ini" (lib.generators.toINI { } { General = bachfmtLib.qmlSettings; })} $out/.qmlformat.ini
+          cp ${
+            pkgs.writeText "qmlformat.ini" (lib.generators.toINI { } { General = bachfmtLib.qmlSettings; })
+          } $out/.qmlformat.ini
         '';
 
         default = self.packages.${pkgs.stdenv.hostPlatform.system}.bachfmt;
