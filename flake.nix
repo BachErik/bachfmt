@@ -59,6 +59,7 @@
             "markdown"
             "json"
             "toml"
+            "go"
           ];
         }
       );
@@ -69,7 +70,12 @@
 
       devShells = forAllSystems (pkgs: {
         default = pkgs.mkShellNoCC {
-          packages = [ self.formatter.${pkgs.stdenv.hostPlatform.system} ];
+          packages = [
+            self.formatter.${pkgs.stdenv.hostPlatform.system}
+            pkgs.go
+            pkgs.gopls
+            pkgs.golangci-lint
+          ];
         };
       });
 
