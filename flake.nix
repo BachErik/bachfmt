@@ -23,7 +23,7 @@
     in
     {
       lib = {
-        inherit (bachfmtLib) languages qmlSettings;
+        inherit (bachfmtLib) languages;
         # bachfmt.lib.mkFormatter pkgs { langs = [ ... ]; }
         inherit (bachfmtLib) mkFormatter;
       };
@@ -39,10 +39,6 @@
         # The portable house style as plain files (what `bachfmt init` will copy)
         house = pkgs.runCommand "bachfmt-house" { } ''
           cp -r ${./house} $out
-          chmod -R u+w $out
-          cp ${
-            pkgs.writeText "qmlformat.ini" (lib.generators.toINI { } { General = bachfmtLib.qmlSettings; })
-          } $out/.qmlformat.ini
         '';
 
         default = self.packages.${pkgs.stdenv.hostPlatform.system}.bachfmt;

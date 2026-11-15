@@ -1,0 +1,161 @@
+{
+  "formatters": {
+    "nixfmt": {
+      "command": "nixfmt",
+      "write": [],
+      "stdin": [],
+      "nixPackage": "nixfmt"
+    },
+    "stylua": {
+      "command": "stylua",
+      "write": [],
+      "stdin": ["--stdin-filepath", "{path}", "-"],
+      "house": ["--config-path", "{house}/.stylua.toml"],
+      "houseFiles": [".stylua.toml"],
+      "nixPackage": "stylua"
+    },
+    "qmlformat": {
+      "command": "qmlformat",
+      "write": ["-i"],
+      "stdin": null,
+      "house": [
+        "--ignore-settings",
+        "--indent-width=4",
+        "--tabs=false",
+        "--column-width=-1",
+        "--newline=unix",
+        "--semicolon-rule=essential",
+        "--objects-spacing",
+        "--functions-spacing",
+        "--normalize=false",
+        "--group-attributes-together=false",
+        "--sort-imports",
+        "--single-line-empty-objects=false"
+      ],
+      "nixPackage": "kdePackages.qtdeclarative"
+    },
+    "prettier": {
+      "command": "prettier",
+      "write": ["--write"],
+      "stdin": ["--stdin-filepath", "{path}"],
+      "house": ["--config", "{house}/.prettierrc.json"],
+      "houseFiles": [".prettierrc.json"],
+      "nixPackage": "prettier"
+    },
+    "taplo": {
+      "command": "taplo",
+      "base": ["format"],
+      "write": [],
+      "stdin": ["--stdin-filepath", "{path}", "-"],
+      "house": ["--config", "{house}/.taplo.toml"],
+      "houseFiles": [".taplo.toml"],
+      "nixPackage": "taplo"
+    },
+    "shfmt": {
+      "command": "shfmt",
+      "write": ["-w"],
+      "stdin": ["--filename", "{path}"],
+      "house": ["--indent=4"],
+      "nixPackage": "shfmt"
+    },
+    "ruff-format": {
+      "command": "ruff",
+      "base": ["format"],
+      "write": [],
+      "stdin": ["--stdin-filename", "{path}", "-"],
+      "house": ["--config", "{house}/ruff.toml"],
+      "houseFiles": ["ruff.toml"],
+      "nixPackage": "ruff"
+    },
+    "gofmt": {
+      "command": "gofmt",
+      "write": ["-w"],
+      "stdin": [],
+      "nixPackage": "go"
+    },
+    "rustfmt": {
+      "command": "rustfmt",
+      "write": [],
+      "stdin": [],
+      "house": ["--edition", "2024", "--config", "newline_style=Unix"],
+      "nixPackage": "rustfmt"
+    },
+    "ktfmt": {
+      "command": "ktfmt",
+      "write": [],
+      "stdin": null,
+      "house": ["--kotlinlang-style"],
+      "nixPackage": "ktfmt"
+    },
+    "clang-format": {
+      "command": "clang-format",
+      "write": ["-i"],
+      "stdin": ["--assume-filename={path}"],
+      "house": ["--style=file:{house}/.clang-format"],
+      "houseFiles": [".clang-format"],
+      "nixPackage": "clang-tools"
+    },
+    "sql-formatter": {
+      "command": "sql-formatter",
+      "write": ["--fix"],
+      "stdin": [],
+      "house": ["--language", "postgresql"],
+      "perFile": true,
+      "nixPackage": "sql-formatter"
+    },
+    "dockerfmt": {
+      "command": "dockerfmt",
+      "write": ["-w"],
+      "stdin": null,
+      "house": ["-n"],
+      "nixPackage": "dockerfmt"
+    },
+    "typstyle": {
+      "command": "typstyle",
+      "write": ["-i"],
+      "stdin": [],
+      "house": ["--line-width", "100", "--line-ending", "lf"],
+      "nixPackage": "typstyle"
+    }
+  },
+  "languages": {
+    "nix": { "formatter": "nixfmt", "includes": ["*.nix"] },
+    "lua": { "formatter": "stylua", "includes": ["*.lua"] },
+    "qml": { "formatter": "qmlformat", "includes": ["*.qml"] },
+    "js": {
+      "formatter": "prettier",
+      "includes": ["*.js", "*.mjs", "*.cjs", "*.jsx", "*.ts", "*.mts", "*.cts", "*.tsx", "*.vue"]
+    },
+    "css": { "formatter": "prettier", "includes": ["*.css", "*.scss", "*.less"] },
+    "html": { "formatter": "prettier", "includes": ["*.html"] },
+    "json": { "formatter": "prettier", "includes": ["*.json", "*.jsonc", "*.json5"] },
+    "yaml": { "formatter": "prettier", "includes": ["*.yaml", "*.yml"] },
+    "markdown": { "formatter": "prettier", "includes": ["*.md", "*.mdx"] },
+    "toml": { "formatter": "taplo", "includes": ["*.toml"] },
+    "shell": { "formatter": "shfmt", "includes": ["*.sh", "*.bash"] },
+    "python": { "formatter": "ruff-format", "includes": ["*.py", "*.pyi"] },
+    "go": { "formatter": "gofmt", "includes": ["*.go"] },
+    "rust": { "formatter": "rustfmt", "includes": ["*.rs"] },
+    "kotlin": { "formatter": "ktfmt", "includes": ["*.kt", "*.kts"] },
+    "c": {
+      "formatter": "clang-format",
+      "includes": ["*.c", "*.h", "*.cc", "*.cpp", "*.cxx", "*.hh", "*.hpp", "*.ino"]
+    },
+    "sql": { "formatter": "sql-formatter", "includes": ["*.sql"] },
+    "docker": {
+      "formatter": "dockerfmt",
+      "includes": [
+        "Dockerfile",
+        "*/Dockerfile",
+        "Dockerfile.*",
+        "*/Dockerfile.*",
+        "*.Dockerfile",
+        "*.dockerfile",
+        "Containerfile",
+        "*/Containerfile"
+      ]
+    },
+    "typst": { "formatter": "typstyle", "includes": ["*.typ", "*.typst"] }
+  },
+  "excludes": ["*.lock", "*.min.*", "node_modules/*"]
+}
